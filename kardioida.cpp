@@ -3,12 +3,16 @@
 #include <cmath>
 #include "head.h"
 
-namespace prog3{
+namespace prog2{
 
 using namespace std;
 
 double Kard::radius(double angle){ 
 	return 2 * par * (1 - cos(angle));
+}
+
+double Kard::radiusCr(double angle){
+	return 8/3*par*sin(angle/2);
 }
 
 double Kard::area(){
@@ -30,8 +34,11 @@ double Kard::arc(double startAngle, double endAngle){
 	return -1;
 }
 
-double Kard::max_radius(){
-	return 4 * par;
+void Kard::dots(double dotX[], double dotY[]){
+	dotX[0] = 4 * par;
+	dotX[1] = 0 ;
+	dotY[0] = par*(2*cos(120*M_PI/180) - cos(240*M_PI/180));
+	dotY[1] = par*(2*sin(120*M_PI/180) - sin(240*M_PI/180));
 }
 
 void Kard::change_par(double newPar){
@@ -43,8 +50,7 @@ int processing(Kard &courv){
 	double angle;
 	int mode;
 	do{
-		cout << mode;
-		cout << "please enter mode:\n"
+		cout << "[-1]  exit\n"
 			<< "0. задать новую кардиоиду\n"
 			<<"1. Вернуть расстояние до центра в полярной системе координат в зависимости от угла для точки принадлежащей кардиоиде.\n"
 			<<"2. Вернуть координаты наиболее удаленных от оси кардиоиды точек.\n"
@@ -62,11 +68,15 @@ int processing(Kard &courv){
 			cout  << "len to point = " << courv.radius(angle) << endl;
 		}
 		else if(mode == 2){
-			cout << "max radius = " << courv.max_radius() << endl;;
+			double dotY[2];
+			double dotX[2];
+			courv.dots(dotY, dotX);
+			cout << "Ox: {"<<dotX[0]<<", "<<dotX[1]<<"}, "<<" {"<<dotX[0]<<", "<<-dotX[1]<<"}\n";
+			cout << "Oy: {"<<dotY[0]<<", "<<dotY[1]<<"}, "<<" {"<<dotY[0]<<", "<<dotY[1]<<"}\n";
 		}
 		else if(mode == 3){
-			cout << "angle = 0	radius = " << courv.max_radius() << endl;
-			cout << "angle = pi	radius = " << 0 <<endl;
+			get_angle(angle, "enter angle -> ");
+			cout << "radius = " << courv.radiusCr(angle) << endl;
 		}
 		else if(mode == 4){
 			cout << "area = " << courv.area() << endl;
@@ -75,17 +85,19 @@ int processing(Kard &courv){
 			double startAngle, endAngle;
 			do{
 				get_angle(startAngle, "enter start angle -> "); 
-				get_angle(endAngle, "enter angle -> ");
+				get_angle(endAngle, "enter end angle -> ");
 			}while(startAngle < 0 || startAngle > 360 || endAngle < 0 || endAngle > 360  || endAngle < startAngle);
-			cout << "" << courv.arc(startAngle, endAngle) << endl;
+			cout << "len = " << courv.arc(startAngle, endAngle) << endl;
 		}
-	}while(mode != EOF);
+	}while(mode != -1);
 		return 0;
 }
 
 void get_double(double &val, const char *txt){
 	int flag = 1;
+	const char * err = "";
 	do{
+		cout << err;
 		cout << txt;
 		cin >> val;
 		if(cin.good()){
@@ -95,22 +107,22 @@ void get_double(double &val, const char *txt){
 				cin.clear();
 			        cin.ignore(1000, '\n');
 		}
+		err = "wronge data!\n";
 	} while(flag);
 }
 
-void get_int(int &val, const char *txt ){
+int  get_int(int &val, const char *txt ){
 	int flag = 1;
 	do{
 		cout << txt;
 		cin >> val;
-		if(cin.good()){
-			flag = 0;
-		}
+		if(cin.good()) flag = 0;
 		else{
 				cin.clear();
 			        cin.ignore(1000, '\n');
 		}
 	} while(flag);
+	return 0;
 }
 
 void get_angle(double &val, const char *txt ){

@@ -2,7 +2,7 @@
 #include "head.h"
 
 int main(){
-	prog3::Kard  courv;
-	prog3::processing(courv);
+	prog2::Kard  courv;
+	prog2::processing(courv);
 	return 0;
 }
