@@ -60,10 +60,16 @@ TEST(kardioida, Test_003){
 
 TEST(kardioida, Test_004){
 	Kard courv1(3);
-}
+	double rad1 = courv1.radiusCr(M_PI * 0.3);
+	ASSERT_NEAR(rad1, 2.72, 0.1);
 
-TEST(kardioida, Test_005){
-	Kard courv1(3);
+	Kard courv2(6);
+	double rad2 = courv2.radiusCr(M_PI * 0.7);
+	ASSERT_NEAR(rad2, 10.69, 0.1);
+
+	Kard courv3(15);
+	double rad3 = courv3.radiusCr(M_PI * 1.3);
+	ASSERT_NEAR(rad3, 26.73, 0.1);
 }
 
 /*
