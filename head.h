@@ -17,7 +17,7 @@ public:
 	void change_par(double newPar); // изменение параметра в формуле кардиоиды
 	double radius(double ange); //растояние от центра до точки заданной в полярных координатах
 	double area(); // площадь
-	double arc(double start_ange, double end_ange); // длинна дуги заданной в полярных
+	double arc(double startAnge, double endAnge); // длинна дуги заданной в полярных
 	double dots(); //
 	double max_radius();
 };

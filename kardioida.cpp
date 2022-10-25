@@ -15,20 +15,19 @@ double Kard::area(){
 	return 6 * M_PI * par*par;
 }
 
-double Kard::arc(double startAngle, double Angle){
-	if(Angle == 0) return 0;
-	if(Angle > 0 && startAngle > 0){ // 1 и 2 четверти поворот против часовой
+double Kard::arc(double startAngle, double endAngle){
+	if(endAngle == 0) return 0;
+	if(endAngle < 180 && startAngle < 180){ 
+		return 8 * par * (cos(startAngle / 2) - cos(endAngle / 2));	
 	}
-	else if (Angle > 0 && startAngle < 0){ // 3 и 4 четверти поворот против часовой
-
+	 if (endAngle > 180 && startAngle < 180){
+		return 8 * par - 8 * par * (cos(startAngle / 2) - cos(endAngle / 2));	
+	
 	}
-	else if (Angle < 0 && startAngle > 0){ // 1 и 2 четверти поворот по часовой
-
+	if (endAngle > 180 && startAngle > 180){ 
+		return - 8 * par * (cos(startAngle / 2) - cos(endAngle / 2));	
 	}
-	else if (Angle > 0 && startAngle < 0){  // 3 и 4 четверти поворот против часовой
-
-	}
-	return 8 * par *  (sin(Angle / 2) - sin(startAngle / 2));
+	return -1;
 }
 
 double Kard::max_radius(){
@@ -41,9 +40,10 @@ void Kard::change_par(double newPar){
 
 
 int processing(Kard &courv){
-	double angle, start;
+	double angle;
 	int mode;
 	do{
+		cout << mode;
 		cout << "please enter mode:\n"
 			<< "0. задать новую кардиоиду\n"
 			<<"1. Вернуть расстояние до центра в полярной системе координат в зависимости от угла для точки принадлежащей кардиоиде.\n"
@@ -72,12 +72,14 @@ int processing(Kard &courv){
 			cout << "area = " << courv.area() << endl;
 		}
 		else if(mode == 5){
-			double startAngle;
-			get_angle(startAngle, "enter start angle -> "); 
-			get_angle(angle, "enter angle -> ");
-			cout << "" << courv.arc(startAngle, angle) << endl;
+			double startAngle, endAngle;
+			do{
+				get_angle(startAngle, "enter start angle -> "); 
+				get_angle(endAngle, "enter angle -> ");
+			}while(startAngle < 0 || startAngle > 360 || endAngle < 0 || endAngle > 360  || endAngle < startAngle);
+			cout << "" << courv.arc(startAngle, endAngle) << endl;
 		}
-	}while(mode != 6);
+	}while(mode != EOF);
 		return 0;
 }
 
