@@ -1,8 +1,8 @@
 #include <iostream>
+#include "head.h"
 
 int main(){
-	kardioida *cour = new;
-	getUint();
-	processing(courv);
+	prog3::Kard  courv;
+	prog3::processing(courv);
 	return 0;
 }
