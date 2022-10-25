@@ -35,10 +35,10 @@ double Kard::arc(double startAngle, double endAngle){
 }
 
 void Kard::dots(double dotX[], double dotY[]){
-	dotX[0] = 4 * par;
-	dotX[1] = 0 ;
-	dotY[0] = par*(2*cos(120*M_PI/180) - cos(240*M_PI/180));
-	dotY[1] = par*(2*sin(120*M_PI/180) - sin(240*M_PI/180));
+	dotY[0] = 4 * par;
+	dotY[1] = 0;
+	dotX[0] = par*(2*cos(120*M_PI/180) - cos(240*M_PI/180));
+	dotX[1] = par*(2*sin(120*M_PI/180) - sin(240*M_PI/180));
 }
 
 void Kard::change_par(double newPar){
